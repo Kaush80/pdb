@@ -11,6 +11,15 @@ const resolvers = {
         console.log("Failed to query db", err);
       });
   },
+  getAllProducts: () => {
+    return Widgets.find({})
+      .then((res) => {
+        return res;
+      })
+      .catch(() => {
+        throw new Error("Error getting all products");
+      });
+  },
   createProduct: ({ input }) => {
     const newWidget = new Widgets({
       name: input.name,
@@ -37,6 +46,15 @@ const resolvers = {
       })
       .catch((err) => {
         console.log("Error while updating", err);
+      });
+  },
+  deleteProduct: ({ id }) => {
+    Widgets.findByIdAndDelete({ _id: id })
+      .then((prod) => {
+        return "Successfully deleted product";
+      })
+      .catch((err) => {
+        console.log("Error removing data");
       });
   },
 };
